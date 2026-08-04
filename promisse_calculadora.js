@@ -1,4 +1,3 @@
-// Exemplo de Promise simulando tempo de espera
 function operacaoPromisse(a, b, op) { 
     return new Promise((resolve, reject) => 
         { 
