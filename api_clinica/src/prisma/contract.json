@@ -134,10 +134,10 @@
                   "kind": "scalar"
                 }
               },
-              "updatedAt": {
+              "password": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamptz-string@1",
+                  "codecId": "pg/text@1",
                   "kind": "scalar"
                 }
               },
@@ -180,8 +180,8 @@
                 "name": {
                   "column": "name"
                 },
-                "updatedAt": {
-                  "column": "updatedAt"
+                "password": {
+                  "column": "password"
                 },
                 "username": {
                   "column": "username"
@@ -306,9 +306,9 @@
                   "nativeType": "text",
                   "nullable": true
                 },
-                "updatedAt": {
-                  "codecId": "pg/timestamptz-string@1",
-                  "nativeType": "timestamptz",
+                "password": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
                   "nullable": false
                 },
                 "username": {
@@ -338,10 +338,10 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "1e8412e162dbbe69f4bb3bf8d07f0280ae67eaab15c34dcf201e67468315428d"
+    "storageHash": "7a7db75fa443ba515a5613a0a93497c8a2d8efdbc1d8379f7de7751a9e1938b6"
   },
   "execution": {
-    "executionHash": "4abff323cc88151ef9c9a0ec90122cfee6d46814a118cdb66a9fdd94a4123463",
+    "executionHash": "94534d3939ec8721db349da41bf407ecc61da80217258fb4e543aa0cd554b6ca",
     "mutations": {
       "defaults": [
         {
@@ -357,21 +357,6 @@
             "column": "updatedAt",
             "namespace": "public",
             "table": "post"
-          }
-        },
-        {
-          "onCreate": {
-            "id": "timestampNow",
-            "kind": "generator"
-          },
-          "onUpdate": {
-            "id": "timestampNow",
-            "kind": "generator"
-          },
-          "ref": {
-            "column": "updatedAt",
-            "namespace": "public",
-            "table": "user"
           }
         }
       ]
