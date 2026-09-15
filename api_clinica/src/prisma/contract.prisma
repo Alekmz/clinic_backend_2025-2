@@ -8,6 +8,7 @@ model User {
   name      String?
   posts     Post[]
   createdAt TimestamptzString @default(now())
+  tokens    Token[]
 }
 
 model Post {
@@ -18,4 +19,16 @@ model Post {
   authorId  Int
   createdAt TimestamptzString @default(now())
   updatedAt temporal.updatedAtString()
+}
+
+model Token {
+  id        Int       @id @default(autoincrement())
+  token     String    
+  type      String 
+  revoked   Boolean   @default(false)
+  expiresAt TimestamptzString
+  usuarioId Int
+
+  usuario User @relation(fields: [usuarioId], references: [id])
+
 }
