@@ -116,7 +116,8 @@ app.post("/login", async (req: Request, res: Response)=>{
       });
 
       res.status(200).json(
-        {"message": "Usuário logado!", 
+        {
+          "message": "Usuário logado!", 
           "data": {
             tokenAcesso,
             tokenRefresh
