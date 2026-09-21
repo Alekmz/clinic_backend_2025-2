@@ -2,10 +2,13 @@ import express, { json, type Express, type Request, type Response } from 'expres
 import { db } from './prisma/db';
 import bcrypt from 'bcrypt';
 import { signTokenAcesso, signTokenRefresh } from './utils/jwt';
-
+import cors  from 'cors'
 
 const app: Express = express();
 app.use(json())
+app.use(cors({
+  origin: 'http://localhost:5173'
+}))
 
 app.get('/usuarios', async (_: Request, res: Response) => {
   const users = await db.orm.public.User.select("id", "username", "email").all()
@@ -129,6 +132,24 @@ app.post("/login", async (req: Request, res: Response)=>{
   res.status(401).json({"message": "Usuário não encontrado!"})
 
 })
+
+app.put('/logout/:id', async (req: Request, res: Response) => {
+  const idUsuario = Number(req.params.id)
+  const usuario = await db.orm.public.User.where({id:idUsuario}).first()
+ 
+  if (usuario) {
+    await db.orm.public.Token.where({usuarioId:idUsuario, revoked:false}).updateAll({
+      revoked:true
+    })
+   
+    res.json({
+      "mensagem": "Usuário deslogado com sucesso!",
+    });
+
+  }
+  res.status(400).send("Usuário não encontrado!")
+
+});
 
 app.listen(3000, () => {
   console.log("Rodando em http://localhost:3000")
