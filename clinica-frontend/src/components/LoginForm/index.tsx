@@ -29,7 +29,7 @@ const LoginForm = () => {
         event.preventDefault()
 
         try {
-            const response = await axios.post<User[]>(
+            const response = await axios.post<any>(
                 "http://localhost:3000/login",
                 {
                     email,
@@ -48,14 +48,17 @@ const LoginForm = () => {
                 return
             }
 
+            console.log(response.data.data)
             localStorage.setItem("email", email)
-
+            localStorage.setItem("tokenAcesso", response.data.data.tokenAcesso)
+            localStorage.setItem("tokenRefresh", response.data.data.tokenRefresh)
+            localStorage.setItem("idUsuario", response.data.data.idUsuario)
             toast.success("Login realizado com sucesso!", {
                 autoClose: 2000
             })
 
             setTimeout(() => {
-                navigate("/dashboard")
+                navigate("/tela-inicial")
             }, 2000)
 
 
