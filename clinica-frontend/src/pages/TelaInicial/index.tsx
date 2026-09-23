@@ -9,8 +9,25 @@ export default function TelaInicial() {
     const tokenRefresh = localStorage.getItem("tokenRefresh")
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        if(!tokenAcesso && !tokenRefresh) navigate('/')
+
+    useEffect(() => {
+        if (!tokenAcesso && !tokenRefresh) navigate('/')
+        const buscarUsuarios = async () => {
+
+            const response = await axios.get<any>(
+                `http://localhost:3000/usuarios`,
+                {
+                    headers:{
+                        Authorization: `Bearer ${tokenAcesso}`
+                    }
+                }
+            )
+
+            console.log(response)
+        }
+
+        buscarUsuarios().catch()
+
     }, [])
 
     const handleLogout = async () => {
@@ -54,7 +71,7 @@ export default function TelaInicial() {
                 <p className="text-blue-950 break-all">{tokenAcesso}</p>
                 <p className="text-blue-950 break-all">{tokenRefresh}</p>
                 <button onClick={handleLogout} className="px-10 py-2 rounded-2xl cursor-pointer bg-blue-950 text-white font-bold">Logout</button>
-            </div> 
+            </div>
 
         </div>
     )
