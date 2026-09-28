@@ -22,9 +22,14 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
             error: "revoked token"
         })
         next();
-    } catch {
-            return res.status(401).json({
-                error: "invalid or expired token"
+    } catch (erro:any) {
+        if(erro?.name === "TokenExpiredError"){
+             return res.status(401).json({
+            error: "expired token"
+        })
+        }
+        return res.status(401).json({
+            error: "invalid token"
         })
     }
 }

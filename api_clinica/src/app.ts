@@ -1,7 +1,7 @@
 import express, { json, type Express, type Request, type Response } from 'express';
 import { db } from './prisma/db';
 import bcrypt from 'bcrypt';
-import { signTokenAcesso, signTokenRefresh } from './utils/jwt';
+import { signTokenAcesso, signTokenRefresh, verificarToken } from './utils/jwt';
 import cors from 'cors'
 import { auth } from './middleware/auth';
 
@@ -11,6 +11,57 @@ app.use(cors({
   origin: 'http://localhost:5173'
 }))
 
+app.get('/renovar-token', async (req: Request, res: Response) => {
+  try {
+    const refreshToken = req.query.token as string
+    console.log(refreshToken)
+    const tokenBanco = await db.orm.public.Token.where({ token: refreshToken }).first()
+    if (tokenBanco?.revoked) return res.status(401).json({ error: "revoked token" })
+
+    const payload = verificarToken(refreshToken)
+    if (!payload) return res.status(401).json({
+      error: "invalid token"
+    })
+    const usuario = await db.orm.public.User.where({ id: tokenBanco?.usuarioId }).first()
+    if (!usuario) return res.status(401).json({
+      error: "user not found"
+    })
+
+    const tokenAcesso = signTokenAcesso({
+      nome: usuario.name,
+      email: usuario.email
+    })
+
+    const acessoExpiraEm = new Date()
+    const acessoExpiraEm5Minutos = acessoExpiraEm.setMinutes(acessoExpiraEm.getMinutes() + 5)
+    await db.orm.public.Token.create({
+      token: tokenAcesso,
+      type: "ACESSO",
+      revoked: false,
+      usuarioId: usuario.id,
+      expiresAt: new Date(acessoExpiraEm5Minutos).toISOString()
+    });
+    return res.status(200).json(
+      {
+        "message": "Token de acesso renovado!",
+        "data": {
+          tokenAcesso,
+          refreshToken,
+          idUsuario: usuario.id
+        }
+      })
+  } catch (erro: any) {
+    if (erro?.name === "TokenExpiredError") {
+      return res.status(401).json({
+        error: "expired refresh token"
+      })
+    }
+    return res.status(401).json({
+      error: "invalid token"
+    })
+
+  }
+})
 
 app.post("/login", async (req: Request, res: Response) => {
   const body = req.body;
