@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect } from "react"
 import { useNavigate } from "react-router"
 import { toast } from "react-toastify"
+import api from "../../api/api"
 
 export default function TelaInicial() {
     const email = localStorage.getItem("email")
@@ -14,15 +15,8 @@ export default function TelaInicial() {
         if (!tokenAcesso && !tokenRefresh) navigate('/')
         const buscarUsuarios = async () => {
 
-            const response = await axios.get<any>(
-                `http://localhost:3000/usuarios`,
-                {
-                    headers:{
-                        Authorization: `Bearer ${tokenAcesso}`
-                    }
-                }
-            )
-
+            const response = await api.get<any>(`/usuarios`)   
+            
             console.log(response)
         }
 
