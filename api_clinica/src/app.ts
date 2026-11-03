@@ -115,6 +115,24 @@ app.post("/login", async (req: Request, res: Response) => {
 
 })
 
+app.post('/cadastro', async (req: Request, res: Response) => {
+  const body = req.body;
+  const hashSenha = await bcrypt.hash(body.password, 10);
+
+  const usuario = await db.orm.public.User.create({
+    email: body.email,
+    name: body.name,
+    password: hashSenha,
+    username: body.username
+  });
+
+  res.json({
+    "mensagem": "Usuário Criado!",
+    "data": usuario.id
+  });
+});
+
+
 app.put('/logout/:id', async (req: Request, res: Response) => {
   const idUsuario = Number(req.params.id)
   const usuario = await db.orm.public.User.where({ id: idUsuario }).first()
@@ -133,13 +151,13 @@ app.put('/logout/:id', async (req: Request, res: Response) => {
 
 });
 
-app.use(auth);
-
 app.get('/usuarios', async (_: Request, res: Response) => {
   const users = await db.orm.public.User.select("id", "username", "email").all()
 
   res.json(users);
 });
+
+app.use(auth);
 
 app.get('/usuarios/:id', async (req: Request, res: Response) => {
   const id = Number(req.params.id)
@@ -192,7 +210,6 @@ app.put('/usuarios/:id', async (req: Request, res: Response) => {
 
 });
 
-
 app.delete('/usuarios/:id', async (req: Request, res: Response) => {
   const id = Number(req.params.id)
   const usuario = await db.orm.public.User.where({ id }).delete()
@@ -203,6 +220,75 @@ app.delete('/usuarios/:id', async (req: Request, res: Response) => {
     });
   } else {
     res.status(400).send("Usuário não existe!")
+  }
+});
+
+app.get('/exames', async (_: Request, res: Response) => {
+  const exames = await db.orm.public.Exame
+    .select("id", "tipo_exame", "valor", "descricao", "resultado", "data_exame")
+    .all()
+
+  res.json(exames);
+});
+
+app.get('/exames/:id', async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const exame = await db.orm.public.Exame.where({ id }).first()
+  if (exame) {
+    res.json(exame);
+  } else {
+    res.status(400).send("Exame não existe!")
+  }
+});
+
+app.post('/exame', async (req: Request, res: Response) => {
+  const body = req.body;
+
+  const exame = await db.orm.public.Exame.create({
+    tipo_exame: body.tipo_exame,
+    valor: String(body.valor),
+    descricao: body.descricao,
+    resultado: body.resultado,
+    data_exame: body.data_exame
+  });
+
+  res.json({
+    "mensagem": "Exame criado!",
+    "data": exame
+  });
+});
+
+app.put('/exames/:id', async (req: Request, res: Response) => {
+  const body = req.body;
+  const id = Number(req.params.id)
+
+  const exame = await db.orm.public.Exame.where({ id }).update({
+    tipo_exame: body.tipo_exame,
+    valor: String(body.valor),
+    descricao: body.descricao,
+    resultado: body.resultado,
+    data_exame: body.data_exame
+  });
+  if (exame) {
+    res.json({
+      "mensagem": "Exame atualizado com sucesso!",
+      "data": exame
+    });
+  } else {
+    res.status(400).send("Exame não encontrado!")
+  }
+});
+
+app.delete('/exames/:id', async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const exame = await db.orm.public.Exame.where({ id }).delete()
+  if (exame) {
+    res.json({
+      mensagem: "Exame deletado",
+      data: exame
+    });
+  } else {
+    res.status(400).send("Exame não existe!")
   }
 });
 

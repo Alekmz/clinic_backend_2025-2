@@ -33,7 +33,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'fe488c4541daf449bff78ee2006e56ffe73b25d0bc149f6cc6ada3b432f9a195'>;
+  StorageHashBase<'c1c8b889d3361bc19fc82222d8f394a87b8ea4d37f47913222d5e6a80f6ad1b9'>;
 export type ExecutionHash =
   ExecutionHashBase<'94534d3939ec8721db349da41bf407ecc61da80217258fb4e543aa0cd554b6ca'>;
 export type ProfileHash =
@@ -241,6 +241,14 @@ type DefaultLiteralValue<CodecId extends string, Encoded> = CodecId extends keyo
 
 export type FieldOutputTypes = {
   readonly public: {
+    readonly Exame: {
+      readonly id: CodecTypes['pg/int4@1']['output'];
+      readonly tipo_exame: CodecTypes['pg/text@1']['output'];
+      readonly valor: CodecTypes['pg/numeric@1']['output'];
+      readonly descricao: CodecTypes['pg/text@1']['output'];
+      readonly resultado: CodecTypes['pg/text@1']['output'] | null;
+      readonly data_exame: CodecTypes['pg/timestamptz-string@1']['output'];
+    };
     readonly Post: {
       readonly id: CodecTypes['pg/int4@1']['output'];
       readonly title: CodecTypes['pg/text@1']['output'];
@@ -269,6 +277,14 @@ export type FieldOutputTypes = {
 };
 export type FieldInputTypes = {
   readonly public: {
+    readonly Exame: {
+      readonly id: CodecTypes['pg/int4@1']['input'];
+      readonly tipo_exame: CodecTypes['pg/text@1']['input'];
+      readonly valor: CodecTypes['pg/numeric@1']['input'];
+      readonly descricao: CodecTypes['pg/text@1']['input'];
+      readonly resultado: CodecTypes['pg/text@1']['input'] | null;
+      readonly data_exame: CodecTypes['pg/timestamptz-string@1']['input'];
+    };
     readonly Post: {
       readonly id: CodecTypes['pg/int4@1']['input'];
       readonly title: CodecTypes['pg/text@1']['input'];
@@ -297,6 +313,14 @@ export type FieldInputTypes = {
 };
 export type StorageColumnTypes = {
   readonly public: {
+    readonly exame: {
+      readonly data_exame: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly descricao: CodecTypes['pg/text@1']['output'];
+      readonly id: CodecTypes['pg/int4@1']['output'];
+      readonly resultado: CodecTypes['pg/text@1']['output'] | null;
+      readonly tipo_exame: CodecTypes['pg/text@1']['output'];
+      readonly valor: CodecTypes['pg/numeric@1']['output'];
+    };
     readonly post: {
       readonly authorId: CodecTypes['pg/int4@1']['output'];
       readonly content: CodecTypes['pg/text@1']['output'] | null;
@@ -325,6 +349,14 @@ export type StorageColumnTypes = {
 };
 export type StorageColumnInputTypes = {
   readonly public: {
+    readonly exame: {
+      readonly data_exame: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly descricao: CodecTypes['pg/text@1']['input'];
+      readonly id: CodecTypes['pg/int4@1']['input'];
+      readonly resultado: CodecTypes['pg/text@1']['input'] | null;
+      readonly tipo_exame: CodecTypes['pg/text@1']['input'];
+      readonly valor: CodecTypes['pg/numeric@1']['input'];
+    };
     readonly post: {
       readonly authorId: CodecTypes['pg/int4@1']['input'];
       readonly content: CodecTypes['pg/text@1']['input'] | null;
@@ -369,6 +401,48 @@ type ContractBase = Omit<
         readonly kind: 'postgres-schema';
         readonly entries: {
           readonly table: {
+            readonly exame: {
+              columns: {
+                readonly id: {
+                  readonly nativeType: 'int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'function';
+                    readonly expression: 'autoincrement()';
+                  };
+                };
+                readonly tipo_exame: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly valor: {
+                  readonly nativeType: 'numeric';
+                  readonly codecId: 'pg/numeric@1';
+                  readonly nullable: false;
+                };
+                readonly descricao: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly resultado: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: true;
+                };
+                readonly data_exame: {
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [];
+              indexes: readonly [];
+              foreignKeys: readonly [];
+            };
             readonly post: {
               columns: {
                 readonly id: {
@@ -555,11 +629,56 @@ type ContractBase = Omit<
     readonly user: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
     readonly post: { readonly namespace: 'public' & NamespaceId; readonly model: 'Post' };
     readonly token: { readonly namespace: 'public' & NamespaceId; readonly model: 'Token' };
+    readonly exame: { readonly namespace: 'public' & NamespaceId; readonly model: 'Exame' };
   };
   readonly domain: {
     readonly namespaces: {
       readonly public: {
         readonly models: {
+          readonly Exame: {
+            readonly fields: {
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly tipo_exame: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly valor: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/numeric@1' };
+              };
+              readonly descricao: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly resultado: {
+                readonly nullable: true;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly data_exame: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+            };
+            readonly relations: Record<string, never>;
+            readonly storage: {
+              readonly table: 'exame';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly id: { readonly column: 'id' };
+                readonly tipo_exame: { readonly column: 'tipo_exame' };
+                readonly valor: { readonly column: 'valor' };
+                readonly descricao: { readonly column: 'descricao' };
+                readonly resultado: { readonly column: 'resultado' };
+                readonly data_exame: { readonly column: 'data_exame' };
+              };
+            };
+          };
           readonly Post: {
             readonly fields: {
               readonly id: {

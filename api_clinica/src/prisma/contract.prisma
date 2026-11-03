@@ -32,3 +32,12 @@ model Token {
   usuario User @relation(fields: [usuarioId], references: [id])
 
 }
+
+model Exame {
+  id         Int      @id @default(autoincrement())
+  tipo_exame String
+  valor      Decimal
+  descricao  String
+  resultado  String?
+  data_exame TimestamptzString
+}
