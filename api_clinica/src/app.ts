@@ -249,7 +249,8 @@ app.post('/exame', async (req: Request, res: Response) => {
     valor: String(body.valor),
     descricao: body.descricao,
     resultado: body.resultado,
-    data_exame: body.data_exame
+    data_exame: body.data_exame,
+    paciente_id: body.paciente_id
   });
 
   res.json({
@@ -267,7 +268,8 @@ app.put('/exames/:id', async (req: Request, res: Response) => {
     valor: String(body.valor),
     descricao: body.descricao,
     resultado: body.resultado,
-    data_exame: body.data_exame
+    data_exame: body.data_exame,
+    paciente_id: body.paciente_id
   });
   if (exame) {
     res.json({
@@ -289,6 +291,88 @@ app.delete('/exames/:id', async (req: Request, res: Response) => {
     });
   } else {
     res.status(400).send("Exame não existe!")
+  }
+});
+
+app.get('/pacientes', async (_: Request, res: Response) => {
+  const pacientes = await db.orm.public.Paciente
+    .select("id", "nome", "cpf", "telefone", "email", "data_nascimento", "sexo", "alergia", "cirurgia", "peso", "altura")
+    .all()
+
+  res.json(pacientes);
+});
+
+app.get('/pacientes/:id', async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const paciente = await db.orm.public.Paciente
+    .where({ id })
+    .include('exame')
+    .first()
+  if (paciente) {
+    res.json(paciente);
+  } else {
+    res.status(400).send("Paciente não existe!")
+  }
+});
+
+app.post('/paciente', async (req: Request, res: Response) => {
+  const body = req.body;
+
+  const paciente = await db.orm.public.Paciente.create({
+    nome: body.nome,
+    cpf: body.cpf,
+    telefone: body.telefone,
+    email: body.email,
+    data_nascimento: body.data_nascimento,
+    sexo: body.sexo,
+    alergia: body.alergia,
+    cirurgia: body.cirurgia,
+    peso: String(body.peso),
+    altura: body.altura
+  });
+
+  res.json({
+    "mensagem": "Paciente criado!",
+    "data": paciente
+  });
+});
+
+app.put('/pacientes/:id', async (req: Request, res: Response) => {
+  const body = req.body;
+  const id = Number(req.params.id)
+
+  const paciente = await db.orm.public.Paciente.where({ id }).update({
+    nome: body.nome,
+    cpf: body.cpf,
+    telefone: body.telefone,
+    email: body.email,
+    data_nascimento: body.data_nascimento,
+    sexo: body.sexo,
+    alergia: body.alergia,
+    cirurgia: body.cirurgia,
+    peso: String(body.peso),
+    altura: body.altura
+  });
+  if (paciente) {
+    res.json({
+      "mensagem": "Paciente atualizado com sucesso!",
+      "data": paciente
+    });
+  } else {
+    res.status(400).send("Paciente não encontrado!")
+  }
+});
+
+app.delete('/pacientes/:id', async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const paciente = await db.orm.public.Paciente.where({ id }).delete()
+  if (paciente) {
+    res.json({
+      mensagem: "Paciente deletado",
+      data: paciente
+    });
+  } else {
+    res.status(400).send("Paciente não existe!")
   }
 });
 

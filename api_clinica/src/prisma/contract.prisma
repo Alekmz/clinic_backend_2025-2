@@ -34,10 +34,28 @@ model Token {
 }
 
 model Exame {
-  id         Int      @id @default(autoincrement())
+  id         Int               @id @default(autoincrement())
   tipo_exame String
   valor      Decimal
   descricao  String
   resultado  String?
   data_exame TimestamptzString
+  paciente_id Int
+  paciente   Paciente              @relation(fields:[paciente_id], references:[id])
+
+}
+
+model Paciente {
+  id              Int      @id @default(autoincrement())
+  nome            String
+  cpf             String
+  telefone        String
+  email           String
+  data_nascimento TimestamptzString
+  sexo            String
+  alergia         String
+  cirurgia        String
+  peso            Decimal
+  altura          Int
+  exame           Exame[]
 }

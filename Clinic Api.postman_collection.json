@@ -139,59 +139,9 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkZlbGlwZUBnbWFpbC5jb20iLCJub21lIjoiRmVsaXBlIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzc4MTkzODU5LCJleHAiOjE3NzgxOTc0NTl9.vV5PuvKA5v8sqltfJ4ivlkZvrq3b-VmDT3LDvSxjFco",
-                "type": "text"
+                "value": "{{bearer_token_0v0i}}"
               }
             ],
-            "url": {
-              "raw": "http://localhost:3000/exames?pagina=1&limite=20",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "exames"
-              ],
-              "query": [
-                {
-                  "key": "pagina",
-                  "value": "1"
-                },
-                {
-                  "key": "limite",
-                  "value": "20"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Buscar exame por id",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/usuarios/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "usuarios",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Criar exames",
-          "request": {
-            "method": "POST",
-            "header": [],
             "url": {
               "raw": "http://localhost:3000/exames",
               "protocol": "http",
@@ -201,6 +151,74 @@
               "port": "3000",
               "path": [
                 "exames"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar exame por id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_1arl}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/exames/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "exames",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar exames",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_1arl}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"tipo_exame\": \"Hemograma completo\",\r\n  \"valor\": 120.00,\r\n  \"descricao\": \"Coleta de sangue em jejum\",\r\n  \"resultado\": \"Normal\",\r\n  \"data_exame\": \"2026-11-04T10:30:00Z\",\r\n  \"paciente_id\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/exame",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "exame"
               ]
             }
           },
@@ -258,6 +276,152 @@
       ]
     },
     {
+      "name": "Pacientes",
+      "item": [
+        {
+          "name": "Listar pacientes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{bearer_token_0v0i}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/pacientes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "pacientes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar paciente por id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_02tw}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/pacientes/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "pacientes",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar pacientes",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_05gb}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Maria Silva\",\r\n  \"cpf\": \"123.456.789-00\",\r\n  \"telefone\": \"(11) 99999-9999\",\r\n  \"email\": \"maria@email.com\",\r\n  \"data_nascimento\": \"1990-05-20T00:00:00Z\",\r\n  \"sexo\": \"Feminino\",\r\n  \"alergia\": \"Dipirona\",\r\n  \"cirurgia\": \"Nenhuma\",\r\n  \"peso\": 62.5,\r\n  \"altura\": 165\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/paciente",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "paciente"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar paciente",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"tipo_exame\": \"Colonoscopia\",\r\n    \"valor\": 1300,\r\n    \"descricao\": \"Exame de colonoscopia para detecção de polipos e câncer do cólon\",\r\n    \"data_exame\": \"2026-04-15T15:30:00.000Z\",\r\n    \"resultado\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/exames/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "exames",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar paciente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/usuarios/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "usuarios",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "Autenticação",
       "item": [
         {
@@ -267,7 +431,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"carlos2@gmail.com\",\r\n    \"nome\": \"Carlos\",\r\n    \"senha\": \"Coxinha123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"alex@gmail.com\",\r\n    \"nome\": \"Alex\",\r\n    \"password\": \"123\",\r\n    \"username\": \"Alex\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -295,7 +459,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"carlos2@gmail.com\",\r\n    \"senha\": \"Coxinha123\"\r\n}",
+              "raw": "{\r\n    \"email\": \"alex@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -315,8 +479,56 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Renovar Token",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/renovar-token",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "renovar-token"
+              ]
+            }
+          },
+          "response": []
         }
       ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "bearer_token_0v0i",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_05gb",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_1arl",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_02tw",
+      "secret": true
     }
   ]
 }

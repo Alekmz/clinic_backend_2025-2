@@ -8,6 +8,10 @@
       "model": "Exame",
       "namespace": "public"
     },
+    "paciente": {
+      "model": "Paciente",
+      "namespace": "public"
+    },
     "post": {
       "model": "Post",
       "namespace": "public"
@@ -48,6 +52,13 @@
                   "kind": "scalar"
                 }
               },
+              "paciente_id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
               "resultado": {
                 "nullable": true,
                 "type": {
@@ -70,7 +81,23 @@
                 }
               }
             },
-            "relations": {},
+            "relations": {
+              "paciente": {
+                "cardinality": "N:1",
+                "on": {
+                  "localFields": [
+                    "paciente_id"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "Paciente",
+                  "namespace": "public"
+                }
+              }
+            },
             "storage": {
               "fields": {
                 "data_exame": {
@@ -81,6 +108,9 @@
                 },
                 "id": {
                   "column": "id"
+                },
+                "paciente_id": {
+                  "column": "paciente_id"
                 },
                 "resultado": {
                   "column": "resultado"
@@ -94,6 +124,143 @@
               },
               "namespaceId": "public",
               "table": "exame"
+            }
+          },
+          "Paciente": {
+            "fields": {
+              "alergia": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "altura": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "cirurgia": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "cpf": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "data_nascimento": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "email": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "nome": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "peso": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/numeric@1",
+                  "kind": "scalar"
+                }
+              },
+              "sexo": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "telefone": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "exame": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "paciente_id"
+                  ]
+                },
+                "to": {
+                  "model": "Exame",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "alergia": {
+                  "column": "alergia"
+                },
+                "altura": {
+                  "column": "altura"
+                },
+                "cirurgia": {
+                  "column": "cirurgia"
+                },
+                "cpf": {
+                  "column": "cpf"
+                },
+                "data_nascimento": {
+                  "column": "data_nascimento"
+                },
+                "email": {
+                  "column": "email"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "nome": {
+                  "column": "nome"
+                },
+                "peso": {
+                  "column": "peso"
+                },
+                "sexo": {
+                  "column": "sexo"
+                },
+                "telefone": {
+                  "column": "telefone"
+                }
+              },
+              "namespaceId": "public",
+              "table": "paciente"
             }
           },
           "Post": {
@@ -402,6 +569,11 @@
                   "nativeType": "int4",
                   "nullable": false
                 },
+                "paciente_id": {
+                  "codecId": "pg/int4@1",
+                  "nativeType": "int4",
+                  "nullable": false
+                },
                 "resultado": {
                   "codecId": "pg/text@1",
                   "nativeType": "text",
@@ -415,6 +587,103 @@
                 "valor": {
                   "codecId": "pg/numeric@1",
                   "nativeType": "numeric",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [
+                {
+                  "source": {
+                    "columns": [
+                      "paciente_id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "exame"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "paciente"
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "columns": [
+                    "paciente_id"
+                  ],
+                  "name": "exame_paciente_id_idx_298e7042",
+                  "prefix": "exame_paciente_id_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
+            },
+            "paciente": {
+              "columns": {
+                "alergia": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "altura": {
+                  "codecId": "pg/int4@1",
+                  "nativeType": "int4",
+                  "nullable": false
+                },
+                "cirurgia": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "cpf": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "data_nascimento": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "nativeType": "timestamptz",
+                  "nullable": false
+                },
+                "email": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/int4@1",
+                  "default": {
+                    "expression": "autoincrement()",
+                    "kind": "function"
+                  },
+                  "nativeType": "int4",
+                  "nullable": false
+                },
+                "nome": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "peso": {
+                  "codecId": "pg/numeric@1",
+                  "nativeType": "numeric",
+                  "nullable": false
+                },
+                "sexo": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "telefone": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
                   "nullable": false
                 }
               },
@@ -641,7 +910,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "c1c8b889d3361bc19fc82222d8f394a87b8ea4d37f47913222d5e6a80f6ad1b9"
+    "storageHash": "a97dd3ea32cf94ccd46ceba6d5471a29e7d61471c92a3a6376d52b4e28f8729a"
   },
   "execution": {
     "executionHash": "94534d3939ec8721db349da41bf407ecc61da80217258fb4e543aa0cd554b6ca",

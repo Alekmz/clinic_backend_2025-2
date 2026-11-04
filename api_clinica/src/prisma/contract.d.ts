@@ -33,7 +33,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'c1c8b889d3361bc19fc82222d8f394a87b8ea4d37f47913222d5e6a80f6ad1b9'>;
+  StorageHashBase<'a97dd3ea32cf94ccd46ceba6d5471a29e7d61471c92a3a6376d52b4e28f8729a'>;
 export type ExecutionHash =
   ExecutionHashBase<'94534d3939ec8721db349da41bf407ecc61da80217258fb4e543aa0cd554b6ca'>;
 export type ProfileHash =
@@ -248,6 +248,20 @@ export type FieldOutputTypes = {
       readonly descricao: CodecTypes['pg/text@1']['output'];
       readonly resultado: CodecTypes['pg/text@1']['output'] | null;
       readonly data_exame: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly paciente_id: CodecTypes['pg/int4@1']['output'];
+    };
+    readonly Paciente: {
+      readonly id: CodecTypes['pg/int4@1']['output'];
+      readonly nome: CodecTypes['pg/text@1']['output'];
+      readonly cpf: CodecTypes['pg/text@1']['output'];
+      readonly telefone: CodecTypes['pg/text@1']['output'];
+      readonly email: CodecTypes['pg/text@1']['output'];
+      readonly data_nascimento: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly sexo: CodecTypes['pg/text@1']['output'];
+      readonly alergia: CodecTypes['pg/text@1']['output'];
+      readonly cirurgia: CodecTypes['pg/text@1']['output'];
+      readonly peso: CodecTypes['pg/numeric@1']['output'];
+      readonly altura: CodecTypes['pg/int4@1']['output'];
     };
     readonly Post: {
       readonly id: CodecTypes['pg/int4@1']['output'];
@@ -284,6 +298,20 @@ export type FieldInputTypes = {
       readonly descricao: CodecTypes['pg/text@1']['input'];
       readonly resultado: CodecTypes['pg/text@1']['input'] | null;
       readonly data_exame: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly paciente_id: CodecTypes['pg/int4@1']['input'];
+    };
+    readonly Paciente: {
+      readonly id: CodecTypes['pg/int4@1']['input'];
+      readonly nome: CodecTypes['pg/text@1']['input'];
+      readonly cpf: CodecTypes['pg/text@1']['input'];
+      readonly telefone: CodecTypes['pg/text@1']['input'];
+      readonly email: CodecTypes['pg/text@1']['input'];
+      readonly data_nascimento: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly sexo: CodecTypes['pg/text@1']['input'];
+      readonly alergia: CodecTypes['pg/text@1']['input'];
+      readonly cirurgia: CodecTypes['pg/text@1']['input'];
+      readonly peso: CodecTypes['pg/numeric@1']['input'];
+      readonly altura: CodecTypes['pg/int4@1']['input'];
     };
     readonly Post: {
       readonly id: CodecTypes['pg/int4@1']['input'];
@@ -317,9 +345,23 @@ export type StorageColumnTypes = {
       readonly data_exame: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly descricao: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/int4@1']['output'];
+      readonly paciente_id: CodecTypes['pg/int4@1']['output'];
       readonly resultado: CodecTypes['pg/text@1']['output'] | null;
       readonly tipo_exame: CodecTypes['pg/text@1']['output'];
       readonly valor: CodecTypes['pg/numeric@1']['output'];
+    };
+    readonly paciente: {
+      readonly alergia: CodecTypes['pg/text@1']['output'];
+      readonly altura: CodecTypes['pg/int4@1']['output'];
+      readonly cirurgia: CodecTypes['pg/text@1']['output'];
+      readonly cpf: CodecTypes['pg/text@1']['output'];
+      readonly data_nascimento: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly email: CodecTypes['pg/text@1']['output'];
+      readonly id: CodecTypes['pg/int4@1']['output'];
+      readonly nome: CodecTypes['pg/text@1']['output'];
+      readonly peso: CodecTypes['pg/numeric@1']['output'];
+      readonly sexo: CodecTypes['pg/text@1']['output'];
+      readonly telefone: CodecTypes['pg/text@1']['output'];
     };
     readonly post: {
       readonly authorId: CodecTypes['pg/int4@1']['output'];
@@ -353,9 +395,23 @@ export type StorageColumnInputTypes = {
       readonly data_exame: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly descricao: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/int4@1']['input'];
+      readonly paciente_id: CodecTypes['pg/int4@1']['input'];
       readonly resultado: CodecTypes['pg/text@1']['input'] | null;
       readonly tipo_exame: CodecTypes['pg/text@1']['input'];
       readonly valor: CodecTypes['pg/numeric@1']['input'];
+    };
+    readonly paciente: {
+      readonly alergia: CodecTypes['pg/text@1']['input'];
+      readonly altura: CodecTypes['pg/int4@1']['input'];
+      readonly cirurgia: CodecTypes['pg/text@1']['input'];
+      readonly cpf: CodecTypes['pg/text@1']['input'];
+      readonly data_nascimento: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly email: CodecTypes['pg/text@1']['input'];
+      readonly id: CodecTypes['pg/int4@1']['input'];
+      readonly nome: CodecTypes['pg/text@1']['input'];
+      readonly peso: CodecTypes['pg/numeric@1']['input'];
+      readonly sexo: CodecTypes['pg/text@1']['input'];
+      readonly telefone: CodecTypes['pg/text@1']['input'];
     };
     readonly post: {
       readonly authorId: CodecTypes['pg/int4@1']['input'];
@@ -435,6 +491,98 @@ type ContractBase = Omit<
                 readonly data_exame: {
                   readonly nativeType: 'timestamptz';
                   readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: false;
+                };
+                readonly paciente_id: {
+                  readonly nativeType: 'int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [];
+              indexes: readonly [
+                {
+                  readonly name: 'exame_paciente_id_idx_298e7042';
+                  readonly prefix: 'exame_paciente_id_idx';
+                  readonly columns: readonly ['paciente_id'];
+                  readonly unique: false;
+                },
+              ];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'exame';
+                    readonly columns: readonly ['paciente_id'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'paciente';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+              ];
+            };
+            readonly paciente: {
+              columns: {
+                readonly id: {
+                  readonly nativeType: 'int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'function';
+                    readonly expression: 'autoincrement()';
+                  };
+                };
+                readonly nome: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly cpf: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly telefone: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly email: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly data_nascimento: {
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: false;
+                };
+                readonly sexo: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly alergia: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly cirurgia: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly peso: {
+                  readonly nativeType: 'numeric';
+                  readonly codecId: 'pg/numeric@1';
+                  readonly nullable: false;
+                };
+                readonly altura: {
+                  readonly nativeType: 'int4';
+                  readonly codecId: 'pg/int4@1';
                   readonly nullable: false;
                 };
               };
@@ -630,6 +778,7 @@ type ContractBase = Omit<
     readonly post: { readonly namespace: 'public' & NamespaceId; readonly model: 'Post' };
     readonly token: { readonly namespace: 'public' & NamespaceId; readonly model: 'Token' };
     readonly exame: { readonly namespace: 'public' & NamespaceId; readonly model: 'Exame' };
+    readonly paciente: { readonly namespace: 'public' & NamespaceId; readonly model: 'Paciente' };
   };
   readonly domain: {
     readonly namespaces: {
@@ -664,8 +813,24 @@ type ContractBase = Omit<
                   readonly codecId: 'pg/timestamptz-string@1';
                 };
               };
+              readonly paciente_id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
             };
-            readonly relations: Record<string, never>;
+            readonly relations: {
+              readonly paciente: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Paciente';
+                };
+                readonly cardinality: 'N:1';
+                readonly on: {
+                  readonly localFields: readonly ['paciente_id'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+            };
             readonly storage: {
               readonly table: 'exame';
               readonly namespaceId: 'public';
@@ -676,6 +841,88 @@ type ContractBase = Omit<
                 readonly descricao: { readonly column: 'descricao' };
                 readonly resultado: { readonly column: 'resultado' };
                 readonly data_exame: { readonly column: 'data_exame' };
+                readonly paciente_id: { readonly column: 'paciente_id' };
+              };
+            };
+          };
+          readonly Paciente: {
+            readonly fields: {
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly nome: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly cpf: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly telefone: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly email: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly data_nascimento: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+              readonly sexo: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly alergia: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly cirurgia: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly peso: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/numeric@1' };
+              };
+              readonly altura: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+            };
+            readonly relations: {
+              readonly exame: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Exame';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['paciente_id'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'paciente';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly id: { readonly column: 'id' };
+                readonly nome: { readonly column: 'nome' };
+                readonly cpf: { readonly column: 'cpf' };
+                readonly telefone: { readonly column: 'telefone' };
+                readonly email: { readonly column: 'email' };
+                readonly data_nascimento: { readonly column: 'data_nascimento' };
+                readonly sexo: { readonly column: 'sexo' };
+                readonly alergia: { readonly column: 'alergia' };
+                readonly cirurgia: { readonly column: 'cirurgia' };
+                readonly peso: { readonly column: 'peso' };
+                readonly altura: { readonly column: 'altura' };
               };
             };
           };
