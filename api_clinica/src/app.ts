@@ -376,6 +376,81 @@ app.delete('/pacientes/:id', async (req: Request, res: Response) => {
   }
 });
 
+app.get('/consultas', async (_: Request, res: Response) => {
+  const consultas = await db.orm.public.Consulta
+    .select("id", "motivo", "data_consulta", "observacoes", "medico_responsavel_id", "paciente_id")
+    .all()
+
+  res.json(consultas);
+});
+
+app.get('/consultas/:id', async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const consulta = await db.orm.public.Consulta
+    .where({ id })
+    .include('paciente')
+    .include('medico_responsavel', (medico) =>
+      medico.select('name', 'email')
+    )
+    .first()
+  if (consulta) {
+    res.json(consulta);
+  } else {
+    res.status(400).send("Consulta não existe!")
+  }
+});
+
+app.post('/consulta', async (req: Request, res: Response) => {
+  const body = req.body;
+
+  const consulta = await db.orm.public.Consulta.create({
+    motivo: body.motivo,
+    data_consulta: body.data_consulta,
+    observacoes: body.observacoes,
+    medico_responsavel_id: body.medico_responsavel_id,
+    paciente_id: body.paciente_id
+  });
+
+  res.json({
+    "mensagem": "Consulta criada!",
+    "data": consulta
+  });
+});
+
+app.put('/consultas/:id', async (req: Request, res: Response) => {
+  const body = req.body;
+  const id = Number(req.params.id)
+
+  const consulta = await db.orm.public.Consulta.where({ id }).update({
+    motivo: body.motivo,
+    data_consulta: body.data_consulta,
+    observacoes: body.observacoes,
+    medico_responsavel_id: body.medico_responsavel_id,
+    paciente_id: body.paciente_id
+  });
+  if (consulta) {
+    res.json({
+      "mensagem": "Consulta atualizada com sucesso!",
+      "data": consulta
+    });
+  } else {
+    res.status(400).send("Consulta não encontrada!")
+  }
+});
+
+app.delete('/consultas/:id', async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const consulta = await db.orm.public.Consulta.where({ id }).delete()
+  if (consulta) {
+    res.json({
+      mensagem: "Consulta deletada",
+      data: consulta
+    });
+  } else {
+    res.status(400).send("Consulta não existe!")
+  }
+});
+
 app.listen(3000, () => {
   console.log("Rodando em http://localhost:3000")
 });

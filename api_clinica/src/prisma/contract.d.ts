@@ -33,7 +33,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'a97dd3ea32cf94ccd46ceba6d5471a29e7d61471c92a3a6376d52b4e28f8729a'>;
+  StorageHashBase<'9ee1850f98078ae94257bd85bbabcfbb398c9523b4c30efbc64ec62ffb1f4f6d'>;
 export type ExecutionHash =
   ExecutionHashBase<'94534d3939ec8721db349da41bf407ecc61da80217258fb4e543aa0cd554b6ca'>;
 export type ProfileHash =
@@ -241,6 +241,14 @@ type DefaultLiteralValue<CodecId extends string, Encoded> = CodecId extends keyo
 
 export type FieldOutputTypes = {
   readonly public: {
+    readonly Consulta: {
+      readonly id: CodecTypes['pg/int4@1']['output'];
+      readonly motivo: CodecTypes['pg/text@1']['output'];
+      readonly data_consulta: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly observacoes: CodecTypes['pg/text@1']['output'];
+      readonly medico_responsavel_id: CodecTypes['pg/int4@1']['output'];
+      readonly paciente_id: CodecTypes['pg/int4@1']['output'];
+    };
     readonly Exame: {
       readonly id: CodecTypes['pg/int4@1']['output'];
       readonly tipo_exame: CodecTypes['pg/text@1']['output'];
@@ -291,6 +299,14 @@ export type FieldOutputTypes = {
 };
 export type FieldInputTypes = {
   readonly public: {
+    readonly Consulta: {
+      readonly id: CodecTypes['pg/int4@1']['input'];
+      readonly motivo: CodecTypes['pg/text@1']['input'];
+      readonly data_consulta: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly observacoes: CodecTypes['pg/text@1']['input'];
+      readonly medico_responsavel_id: CodecTypes['pg/int4@1']['input'];
+      readonly paciente_id: CodecTypes['pg/int4@1']['input'];
+    };
     readonly Exame: {
       readonly id: CodecTypes['pg/int4@1']['input'];
       readonly tipo_exame: CodecTypes['pg/text@1']['input'];
@@ -341,6 +357,14 @@ export type FieldInputTypes = {
 };
 export type StorageColumnTypes = {
   readonly public: {
+    readonly consulta: {
+      readonly data_consulta: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly id: CodecTypes['pg/int4@1']['output'];
+      readonly medico_responsavel_id: CodecTypes['pg/int4@1']['output'];
+      readonly motivo: CodecTypes['pg/text@1']['output'];
+      readonly observacoes: CodecTypes['pg/text@1']['output'];
+      readonly paciente_id: CodecTypes['pg/int4@1']['output'];
+    };
     readonly exame: {
       readonly data_exame: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly descricao: CodecTypes['pg/text@1']['output'];
@@ -391,6 +415,14 @@ export type StorageColumnTypes = {
 };
 export type StorageColumnInputTypes = {
   readonly public: {
+    readonly consulta: {
+      readonly data_consulta: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly id: CodecTypes['pg/int4@1']['input'];
+      readonly medico_responsavel_id: CodecTypes['pg/int4@1']['input'];
+      readonly motivo: CodecTypes['pg/text@1']['input'];
+      readonly observacoes: CodecTypes['pg/text@1']['input'];
+      readonly paciente_id: CodecTypes['pg/int4@1']['input'];
+    };
     readonly exame: {
       readonly data_exame: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly descricao: CodecTypes['pg/text@1']['input'];
@@ -457,6 +489,86 @@ type ContractBase = Omit<
         readonly kind: 'postgres-schema';
         readonly entries: {
           readonly table: {
+            readonly consulta: {
+              columns: {
+                readonly id: {
+                  readonly nativeType: 'int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'function';
+                    readonly expression: 'autoincrement()';
+                  };
+                };
+                readonly motivo: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly data_consulta: {
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly nullable: false;
+                };
+                readonly observacoes: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly medico_responsavel_id: {
+                  readonly nativeType: 'int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                };
+                readonly paciente_id: {
+                  readonly nativeType: 'int4';
+                  readonly codecId: 'pg/int4@1';
+                  readonly nullable: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [];
+              indexes: readonly [
+                {
+                  readonly name: 'consulta_medico_responsavel_id_idx_9feaae0f';
+                  readonly prefix: 'consulta_medico_responsavel_id_idx';
+                  readonly columns: readonly ['medico_responsavel_id'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'consulta_paciente_id_idx_298e7042';
+                  readonly prefix: 'consulta_paciente_id_idx';
+                  readonly columns: readonly ['paciente_id'];
+                  readonly unique: false;
+                },
+              ];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'consulta';
+                    readonly columns: readonly ['medico_responsavel_id'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'user';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'consulta';
+                    readonly columns: readonly ['paciente_id'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'paciente';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+              ];
+            };
             readonly exame: {
               columns: {
                 readonly id: {
@@ -778,12 +890,77 @@ type ContractBase = Omit<
     readonly post: { readonly namespace: 'public' & NamespaceId; readonly model: 'Post' };
     readonly token: { readonly namespace: 'public' & NamespaceId; readonly model: 'Token' };
     readonly exame: { readonly namespace: 'public' & NamespaceId; readonly model: 'Exame' };
+    readonly consulta: { readonly namespace: 'public' & NamespaceId; readonly model: 'Consulta' };
     readonly paciente: { readonly namespace: 'public' & NamespaceId; readonly model: 'Paciente' };
   };
   readonly domain: {
     readonly namespaces: {
       readonly public: {
         readonly models: {
+          readonly Consulta: {
+            readonly fields: {
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly motivo: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly data_consulta: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-string@1';
+                };
+              };
+              readonly observacoes: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly medico_responsavel_id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+              readonly paciente_id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/int4@1' };
+              };
+            };
+            readonly relations: {
+              readonly medico_responsavel: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
+                readonly cardinality: 'N:1';
+                readonly on: {
+                  readonly localFields: readonly ['medico_responsavel_id'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+              readonly paciente: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Paciente';
+                };
+                readonly cardinality: 'N:1';
+                readonly on: {
+                  readonly localFields: readonly ['paciente_id'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'consulta';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly id: { readonly column: 'id' };
+                readonly motivo: { readonly column: 'motivo' };
+                readonly data_consulta: { readonly column: 'data_consulta' };
+                readonly observacoes: { readonly column: 'observacoes' };
+                readonly medico_responsavel_id: { readonly column: 'medico_responsavel_id' };
+                readonly paciente_id: { readonly column: 'paciente_id' };
+              };
+            };
+          };
           readonly Exame: {
             readonly fields: {
               readonly id: {
@@ -896,6 +1073,17 @@ type ContractBase = Omit<
               };
             };
             readonly relations: {
+              readonly consulta: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Consulta';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['paciente_id'];
+                };
+              };
               readonly exame: {
                 readonly to: {
                   readonly namespace: 'public' & NamespaceId;
@@ -1066,6 +1254,17 @@ type ContractBase = Omit<
               };
             };
             readonly relations: {
+              readonly consulta: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'Consulta';
+                };
+                readonly cardinality: '1:N';
+                readonly on: {
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['medico_responsavel_id'];
+                };
+              };
               readonly posts: {
                 readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Post' };
                 readonly cardinality: '1:N';

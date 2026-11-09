@@ -4,6 +4,10 @@
   "target": "postgres",
   "profileHash": "3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2",
   "roots": {
+    "consulta": {
+      "model": "Consulta",
+      "namespace": "public"
+    },
     "exame": {
       "model": "Exame",
       "namespace": "public"
@@ -29,6 +33,108 @@
     "namespaces": {
       "public": {
         "models": {
+          "Consulta": {
+            "fields": {
+              "data_consulta": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "medico_responsavel_id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "motivo": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "observacoes": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "paciente_id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "medico_responsavel": {
+                "cardinality": "N:1",
+                "on": {
+                  "localFields": [
+                    "medico_responsavel_id"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "User",
+                  "namespace": "public"
+                }
+              },
+              "paciente": {
+                "cardinality": "N:1",
+                "on": {
+                  "localFields": [
+                    "paciente_id"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "Paciente",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "data_consulta": {
+                  "column": "data_consulta"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "medico_responsavel_id": {
+                  "column": "medico_responsavel_id"
+                },
+                "motivo": {
+                  "column": "motivo"
+                },
+                "observacoes": {
+                  "column": "observacoes"
+                },
+                "paciente_id": {
+                  "column": "paciente_id"
+                }
+              },
+              "namespaceId": "public",
+              "table": "consulta"
+            }
+          },
           "Exame": {
             "fields": {
               "data_exame": {
@@ -207,6 +313,21 @@
               }
             },
             "relations": {
+              "consulta": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "paciente_id"
+                  ]
+                },
+                "to": {
+                  "model": "Consulta",
+                  "namespace": "public"
+                }
+              },
               "exame": {
                 "cardinality": "1:N",
                 "on": {
@@ -483,6 +604,21 @@
               }
             },
             "relations": {
+              "consulta": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "medico_responsavel_id"
+                  ]
+                },
+                "to": {
+                  "model": "Consulta",
+                  "namespace": "public"
+                }
+              },
               "posts": {
                 "cardinality": "1:N",
                 "on": {
@@ -548,6 +684,102 @@
       "public": {
         "entries": {
           "table": {
+            "consulta": {
+              "columns": {
+                "data_consulta": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "nativeType": "timestamptz",
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/int4@1",
+                  "default": {
+                    "expression": "autoincrement()",
+                    "kind": "function"
+                  },
+                  "nativeType": "int4",
+                  "nullable": false
+                },
+                "medico_responsavel_id": {
+                  "codecId": "pg/int4@1",
+                  "nativeType": "int4",
+                  "nullable": false
+                },
+                "motivo": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "observacoes": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "paciente_id": {
+                  "codecId": "pg/int4@1",
+                  "nativeType": "int4",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [
+                {
+                  "source": {
+                    "columns": [
+                      "medico_responsavel_id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "consulta"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "user"
+                  }
+                },
+                {
+                  "source": {
+                    "columns": [
+                      "paciente_id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "consulta"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "paciente"
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "columns": [
+                    "medico_responsavel_id"
+                  ],
+                  "name": "consulta_medico_responsavel_id_idx_9feaae0f",
+                  "prefix": "consulta_medico_responsavel_id_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "paciente_id"
+                  ],
+                  "name": "consulta_paciente_id_idx_298e7042",
+                  "prefix": "consulta_paciente_id_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
+            },
             "exame": {
               "columns": {
                 "data_exame": {
@@ -910,7 +1142,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "a97dd3ea32cf94ccd46ceba6d5471a29e7d61471c92a3a6376d52b4e28f8729a"
+    "storageHash": "9ee1850f98078ae94257bd85bbabcfbb398c9523b4c30efbc64ec62ffb1f4f6d"
   },
   "execution": {
     "executionHash": "94534d3939ec8721db349da41bf407ecc61da80217258fb4e543aa0cd554b6ca",
