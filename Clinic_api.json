@@ -1,0 +1,1147 @@
+{
+  "info": {
+    "name": "Clinic Api",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Autenticação",
+      "item": [
+        {
+          "name": "Cadastro",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/cadastro",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cadastro"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alex@gmail.com\",\n  \"name\": \"Alex\",\n  \"password\": \"123\",\n  \"username\": \"alex\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alex@gmail.com\",\n  \"password\": \"123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Renovar Token",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/renovar-token?token={{tokenRefresh}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "renovar-token"
+              ],
+              "query": [
+                {
+                  "key": "token",
+                  "value": "{{tokenRefresh}}"
+                }
+              ],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/logout/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "logout",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Listar usuarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Criar usuario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/usuario",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuario"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alex@gmail.com\",\n  \"name\": \"Alex\",\n  \"password\": \"123\",\n  \"username\": \"alex\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Buscar usuario por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Atualizar usuario",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alex@gmail.com\",\n  \"name\": \"Alex\",\n  \"password\": \"123\",\n  \"username\": \"alex\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Deletar usuario",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "2"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pacientes",
+      "item": [
+        {
+          "name": "Listar pacientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/pacientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pacientes"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar paciente por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/pacientes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pacientes",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Criar paciente",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/paciente",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "paciente"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Alex\",\n  \"cpf\": \"12345678900\",\n  \"telefone\": \"11999999999\",\n  \"email\": \"alex@gmail.com\",\n  \"data_nascimento\": \"1990-01-01T00:00:00.000Z\",\n  \"sexo\": \"M\",\n  \"alergia\": \"Nenhuma\",\n  \"cirurgia\": \"Nenhuma\",\n  \"peso\": 70.5,\n  \"altura\": 175\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Editar paciente",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/pacientes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pacientes",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Alex\",\n  \"cpf\": \"12345678900\",\n  \"telefone\": \"11999999999\",\n  \"email\": \"alex@gmail.com\",\n  \"data_nascimento\": \"1990-01-01T00:00:00.000Z\",\n  \"sexo\": \"M\",\n  \"alergia\": \"Nenhuma\",\n  \"cirurgia\": \"Nenhuma\",\n  \"peso\": 70.5,\n  \"altura\": 175\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Deletar paciente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/pacientes/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pacientes",
+                "2"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Exames",
+      "item": [
+        {
+          "name": "Listar exames",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/exames",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exames"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar exame por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/exames/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exames",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filtrar por tipo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/exames/tipo/Colonoscopia",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exames",
+                "tipo",
+                "Colonoscopia"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filtrar por paciente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/exames/paciente/Alex",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exames",
+                "paciente",
+                "Alex"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filtrar por data",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/exames/data/2026-11-15",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exames",
+                "data",
+                "2026-11-15"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Criar exame",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/exame",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exame"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo_exame\": \"Colonoscopia\",\n  \"valor\": 1300,\n  \"descricao\": \"Exame de colonoscopia para detecção de pólipos e câncer do cólon\",\n  \"resultado\": \"\",\n  \"data_exame\": \"2026-11-15T15:30:00.000Z\",\n  \"paciente_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Editar exame",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/exames/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exames",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo_exame\": \"Colonoscopia\",\n  \"valor\": 1300,\n  \"descricao\": \"Exame de colonoscopia para detecção de pólipos e câncer do cólon\",\n  \"resultado\": \"\",\n  \"data_exame\": \"2026-11-15T15:30:00.000Z\",\n  \"paciente_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Deletar exame",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/exames/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "exames",
+                "2"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Consultas",
+      "item": [
+        {
+          "name": "Listar consultas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/consultas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "consultas"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar consultas (filtros)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/consultas/busca?paciente=Alex&data=2026-11-15",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "consultas",
+                "busca"
+              ],
+              "query": [
+                {
+                  "key": "paciente",
+                  "value": "Alex"
+                },
+                {
+                  "key": "data",
+                  "value": "2026-11-15"
+                }
+              ],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar consulta por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/consultas/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "consultas",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Criar consulta",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/consulta",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "consulta"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Dor de cabeça persistente\",\n  \"data_consulta\": \"2026-11-15T14:30:00.000Z\",\n  \"observacoes\": \"Paciente relata dores há uma semana. Solicitado exame.\",\n  \"medico_responsavel_id\": 1,\n  \"paciente_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Editar consulta",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/consultas/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "consultas",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Dor de cabeça persistente\",\n  \"data_consulta\": \"2026-11-15T14:30:00.000Z\",\n  \"observacoes\": \"Paciente relata dores há uma semana. Solicitado exame.\",\n  \"medico_responsavel_id\": 1,\n  \"paciente_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Deletar consulta",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/consultas/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "consultas",
+                "2"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Prontuario",
+      "item": [
+        {
+          "name": "Listar prontuarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/prontuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "prontuarios"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar prontuarios (filtros)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/prontuarios/busca?paciente=Alex&medico=Alex",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "prontuarios",
+                "busca"
+              ],
+              "query": [
+                {
+                  "key": "paciente",
+                  "value": "Alex"
+                },
+                {
+                  "key": "medico",
+                  "value": "Alex"
+                }
+              ],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar prontuario por id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/prontuarios/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "prontuarios",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Criar prontuario",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/prontuario",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "prontuario"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"descricao\": \"Paciente apresentou melhora após medicação.\",\n  \"data\": \"2026-11-15T16:00:00.000Z\",\n  \"medico_responsavel_id\": 1,\n  \"paciente_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Editar prontuario",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/prontuarios/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "prontuarios",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"descricao\": \"Paciente apresentou melhora após medicação.\",\n  \"data\": \"2026-11-15T16:00:00.000Z\",\n  \"medico_responsavel_id\": 1,\n  \"paciente_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Deletar prontuario",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "description": "",
+            "url": {
+              "raw": "{{baseUrl}}/prontuarios/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "prontuarios",
+                "2"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "default"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "tokenRefresh",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
