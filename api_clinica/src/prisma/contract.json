@@ -20,6 +20,10 @@
       "model": "Post",
       "namespace": "public"
     },
+    "prontuario": {
+      "model": "Prontuario",
+      "namespace": "public"
+    },
     "token": {
       "model": "Token",
       "namespace": "public"
@@ -342,6 +346,21 @@
                   "model": "Exame",
                   "namespace": "public"
                 }
+              },
+              "prontuario": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "paciente_id"
+                  ]
+                },
+                "to": {
+                  "model": "Prontuario",
+                  "namespace": "public"
+                }
               }
             },
             "storage": {
@@ -469,6 +488,98 @@
               },
               "namespaceId": "public",
               "table": "post"
+            }
+          },
+          "Prontuario": {
+            "fields": {
+              "data": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "descricao": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "medico_responsavel_id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "paciente_id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "medico_responsavel": {
+                "cardinality": "N:1",
+                "on": {
+                  "localFields": [
+                    "medico_responsavel_id"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "User",
+                  "namespace": "public"
+                }
+              },
+              "paciente": {
+                "cardinality": "N:1",
+                "on": {
+                  "localFields": [
+                    "paciente_id"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "Paciente",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "data": {
+                  "column": "data"
+                },
+                "descricao": {
+                  "column": "descricao"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "medico_responsavel_id": {
+                  "column": "medico_responsavel_id"
+                },
+                "paciente_id": {
+                  "column": "paciente_id"
+                }
+              },
+              "namespaceId": "public",
+              "table": "prontuario"
             }
           },
           "Token": {
@@ -631,6 +742,21 @@
                 },
                 "to": {
                   "model": "Post",
+                  "namespace": "public"
+                }
+              },
+              "prontuario": {
+                "cardinality": "1:N",
+                "on": {
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "medico_responsavel_id"
+                  ]
+                },
+                "to": {
+                  "model": "Prontuario",
                   "namespace": "public"
                 }
               },
@@ -1004,6 +1130,97 @@
               },
               "uniques": []
             },
+            "prontuario": {
+              "columns": {
+                "data": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "nativeType": "timestamptz",
+                  "nullable": true
+                },
+                "descricao": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/int4@1",
+                  "default": {
+                    "expression": "autoincrement()",
+                    "kind": "function"
+                  },
+                  "nativeType": "int4",
+                  "nullable": false
+                },
+                "medico_responsavel_id": {
+                  "codecId": "pg/int4@1",
+                  "nativeType": "int4",
+                  "nullable": false
+                },
+                "paciente_id": {
+                  "codecId": "pg/int4@1",
+                  "nativeType": "int4",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [
+                {
+                  "source": {
+                    "columns": [
+                      "medico_responsavel_id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "prontuario"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "user"
+                  }
+                },
+                {
+                  "source": {
+                    "columns": [
+                      "paciente_id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "prontuario"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "paciente"
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "columns": [
+                    "medico_responsavel_id"
+                  ],
+                  "name": "prontuario_medico_responsavel_id_idx_9feaae0f",
+                  "prefix": "prontuario_medico_responsavel_id_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "paciente_id"
+                  ],
+                  "name": "prontuario_paciente_id_idx_298e7042",
+                  "prefix": "prontuario_paciente_id_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
+            },
             "token": {
               "columns": {
                 "expiresAt": {
@@ -1142,7 +1359,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "9ee1850f98078ae94257bd85bbabcfbb398c9523b4c30efbc64ec62ffb1f4f6d"
+    "storageHash": "b0bf844b0b593ad275d53cd18a0c308973d65fb350087c915b63a1b215fb70cb"
   },
   "execution": {
     "executionHash": "94534d3939ec8721db349da41bf407ecc61da80217258fb4e543aa0cd554b6ca",

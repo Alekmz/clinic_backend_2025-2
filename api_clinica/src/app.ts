@@ -59,7 +59,6 @@ app.get('/renovar-token', async (req: Request, res: Response) => {
     return res.status(401).json({
       error: "invalid token"
     })
-
   }
 })
 
@@ -448,6 +447,79 @@ app.delete('/consultas/:id', async (req: Request, res: Response) => {
     });
   } else {
     res.status(400).send("Consulta não existe!")
+  }
+});
+
+app.get('/prontuarios', async (_: Request, res: Response) => {
+  const prontuarios = await db.orm.public.Prontuario
+    .select("id", "descricao", "data", "medico_responsavel_id", "paciente_id")
+    .all()
+
+  res.json(prontuarios);
+});
+
+app.get('/prontuarios/:id', async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const prontuario = await db.orm.public.Prontuario
+    .where({ id })
+    .include('paciente')
+    .include('medico_responsavel', (medico) =>
+      medico.select('name', 'email')
+    )
+    .first()
+  if (prontuario) {
+    res.json(prontuario);
+  } else {
+    res.status(400).send("Prontuário não existe!")
+  }
+});
+
+app.post('/prontuario', async (req: Request, res: Response) => {
+  const body = req.body;
+
+  const prontuario = await db.orm.public.Prontuario.create({
+    descricao: body.descricao,
+    data: body.data,
+    medico_responsavel_id: body.medico_responsavel_id,
+    paciente_id: body.paciente_id
+  });
+
+  res.json({
+    "mensagem": "Prontuário criado!",
+    "data": prontuario
+  });
+});
+
+app.put('/prontuarios/:id', async (req: Request, res: Response) => {
+  const body = req.body;
+  const id = Number(req.params.id)
+
+  const prontuario = await db.orm.public.Prontuario.where({ id }).update({
+    descricao: body.descricao,
+    data: body.data,
+    medico_responsavel_id: body.medico_responsavel_id,
+    paciente_id: body.paciente_id
+  });
+  if (prontuario) {
+    res.json({
+      "mensagem": "Prontuário atualizado com sucesso!",
+      "data": prontuario
+    });
+  } else {
+    res.status(400).send("Prontuário não encontrado!")
+  }
+});
+
+app.delete('/prontuarios/:id', async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const prontuario = await db.orm.public.Prontuario.where({ id }).delete()
+  if (prontuario) {
+    res.json({
+      mensagem: "Prontuário deletado",
+      data: prontuario
+    });
+  } else {
+    res.status(400).send("Prontuário não existe!")
   }
 });
 

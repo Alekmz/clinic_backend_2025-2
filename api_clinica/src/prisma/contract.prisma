@@ -8,8 +8,9 @@ model User {
   name      String?
   posts     Post[]
   createdAt TimestamptzString @default(now())
-  tokens    Token[]
-  consulta  Consulta[]
+  tokens     Token[]
+  consulta   Consulta[]
+  prontuario Prontuario[]
 }
 
 model Post {
@@ -57,6 +58,16 @@ model Consulta {
   paciente              Paciente         @relation(fields: [paciente_id], references: [id])
 }
 
+model Prontuario {
+  id                    Int              @id @default(autoincrement())
+  descricao             String
+  data                  TimestamptzString?
+  medico_responsavel_id Int
+  medico_responsavel    User             @relation(fields: [medico_responsavel_id], references: [id])
+  paciente_id           Int
+  paciente              Paciente         @relation(fields: [paciente_id], references: [id])
+}
+
 model Paciente {
   id              Int      @id @default(autoincrement())
   nome            String
@@ -71,4 +82,5 @@ model Paciente {
   altura          Int
   exame           Exame[]
   consulta        Consulta[]
+  prontuario      Prontuario[]
 }
