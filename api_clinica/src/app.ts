@@ -230,6 +230,43 @@ app.get('/exames', async (_: Request, res: Response) => {
   res.json(exames);
 });
 
+app.get('/exames/tipo/:tipo_exame', async (req: Request, res: Response) => {
+  const tipo_exame = req.params.tipo_exame
+  const exames = await db.orm.public.Exame
+    .where((e) => e.tipo_exame.ilike(`%${tipo_exame}%`))
+    .select("id", "tipo_exame", "valor", "descricao", "resultado", "data_exame", "paciente_id")
+    .all()
+
+  res.json(exames);
+});
+
+app.get('/exames/paciente/:nome', async (req: Request, res: Response) => {
+  const nome = req.params.nome
+  const exames = await db.orm.public.Exame
+    .where((e) => e.paciente.some((p) => p.nome.ilike(`%${nome}%`)))
+    .select("id", "tipo_exame", "valor", "descricao", "resultado", "data_exame", "paciente_id")
+    .all()
+
+  res.json(exames);
+});
+
+app.get('/exames/data/:data', async (req: Request, res: Response) => {
+  const data = req.params.data
+  const inicio = new Date(`${data}T00:00:00.000Z`)
+  if (isNaN(inicio.getTime())) return res.status(400).send("Data inválida!")
+
+  const fim = new Date(inicio)
+  fim.setUTCDate(fim.getUTCDate() + 1)
+
+  const exames = await db.orm.public.Exame
+    .where((e) => e.data_exame.gte(inicio.toISOString()))
+    .where((e) => e.data_exame.lt(fim.toISOString()))
+    .select("id", "tipo_exame", "valor", "descricao", "resultado", "data_exame", "paciente_id")
+    .all()
+
+  res.json(exames);
+});
+
 app.get('/exames/:id', async (req: Request, res: Response) => {
   const id = Number(req.params.id)
   const exame = await db.orm.public.Exame.where({ id }).first()
@@ -383,6 +420,39 @@ app.get('/consultas', async (_: Request, res: Response) => {
   res.json(consultas);
 });
 
+app.get('/consultas/busca', async (req: Request, res: Response) => {
+  const { data, paciente } = req.query
+  let consultas = db.orm.public.Consulta
+    .select("id", "motivo", "data_consulta", "observacoes", "medico_responsavel_id", "paciente_id")
+    .include('paciente')
+    .include('medico_responsavel', (medico) =>
+      medico.select('name', 'email')
+    )
+
+  if (data) {
+    const valor = String(data)
+    if (valor.includes('T')) {
+      consultas = consultas.where((c) => c.data_consulta.eq(valor))
+    } else {
+      const inicio = new Date(`${valor}T00:00:00.000Z`)
+      if (isNaN(inicio.getTime())) return res.status(400).send("Data inválida!")
+
+      const fim = new Date(inicio)
+      fim.setUTCDate(fim.getUTCDate() + 1)
+
+      consultas = consultas.where((c) => c.data_consulta.gte(inicio.toISOString()))
+      consultas = consultas.where((c) => c.data_consulta.lt(fim.toISOString()))
+    }
+  }
+
+  if (paciente) {
+    const nome = String(paciente)
+    consultas = consultas.where((c) => c.paciente.some((p) => p.nome.ilike(`%${nome}%`)))
+  }
+
+  res.json(await consultas.all());
+});
+
 app.get('/consultas/:id', async (req: Request, res: Response) => {
   const id = Number(req.params.id)
   const consulta = await db.orm.public.Consulta
@@ -456,6 +526,32 @@ app.get('/prontuarios', async (_: Request, res: Response) => {
     .all()
 
   res.json(prontuarios);
+});
+
+app.get('/prontuarios/busca', async (req: Request, res: Response) => {
+  const { paciente, medico } = req.query
+  let prontuarios = db.orm.public.Prontuario
+    .select("id", "descricao", "data", "medico_responsavel_id", "paciente_id")
+    .include('paciente')
+    .include('medico_responsavel', (medico) =>
+      medico.select('name', 'email')
+    )
+
+  if (paciente) {
+    const nome = String(paciente)
+    prontuarios = prontuarios.where((p) =>
+      p.paciente.some((pac) => pac.nome.ilike(`%${nome}%`))
+    )
+  }
+
+  if (medico) {
+    const nome = String(medico)
+    prontuarios = prontuarios.where((p) =>
+      p.medico_responsavel.some((u) => u.name.ilike(`%${nome}%`))
+    )
+  }
+
+  res.json(await prontuarios.all());
 });
 
 app.get('/prontuarios/:id', async (req: Request, res: Response) => {
