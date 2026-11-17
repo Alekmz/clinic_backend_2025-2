@@ -222,13 +222,27 @@ app.delete('/usuarios/:id', async (req: Request, res: Response) => {
   }
 });
 
-app.get('/exames', async (_: Request, res: Response) => {
+app.get('/exames', async (req: Request, res: Response) => {
+  const pagina = Number(req.query.pagina) 
+  const limite = Number(req.query.limite) || 10
   const exames = await db.orm.public.Exame
     .select("id", "tipo_exame", "valor", "descricao", "resultado", "data_exame")
+    .orderBy([(e) => e.data_exame.desc(), e => e.id.desc()])
+    .limit(limite)
+    .offset((pagina - 1) * limite)
     .all()
 
-  res.json(exames);
-});
+  const totalExames = await db.orm.public.Exame.aggregate((exame) => ({ total: exame.count() }))
+  const totalPaginas = Math.ceil(totalExames.total / (limite))
+
+  res.json({
+    exames,
+    totalExames: totalExames.total,
+    totalPaginas,
+    paginaAtual: pagina
+  });
+})
+
 
 app.get('/exames/tipo/:tipo_exame', async (req: Request, res: Response) => {
   const tipo_exame = req.params.tipo_exame
